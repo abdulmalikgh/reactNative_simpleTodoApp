@@ -2,9 +2,9 @@ import { View, Text, TouchableOpacity,StyleSheet } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 
-export default function OpenAddToDoButton() {
+export default function OpenAddToDoButton({addTodo}) {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity onPress={addTodo} style={styles.button}>
       <Ionicons name="add-outline" size={24} color="white" />
     </TouchableOpacity>
   )
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems:'center',
-        bottom: 15,
-        right: 15
+        bottom: 20,
+        right: 20,
+        zIndex:10
     }
 })

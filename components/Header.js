@@ -1,9 +1,9 @@
 import { View,Text,StyleSheet, StatusBar } from "react-native"
 
-export default function Header() {
+export default function Header({title}) {
   return (
     <View style={styles.header}>
-        <Text style={styles.headerText}> My Todos </Text>
+        <Text style={styles.headerText}>{title}</Text>
     </View>
   )
 }
