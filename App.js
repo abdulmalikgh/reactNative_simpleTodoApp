@@ -4,29 +4,29 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import TodoForm from './components/TodoForm';
 import Header from './components/Header';
 import OpenAddToDoButton from './components/OpenAddToDoButton';
+import TodoLists from './components/TodoLists';
 
-const todosContext = createContext()
+export const TodosContext = createContext([])
 
 export default function App() {
   const [showTodos, setShowTodos] = useState(true)
-
-  const addTodo = (title, description) => {
-    console.log(title,description)
-  }
+  const [todos, setTodos] = useState([])
 
   return (
-    <SafeAreaView style={styles.container}>
+    <TodosContext.Provider value={todos}>
+      <SafeAreaView style={styles.container}>
         <Header  title={showTodos ? 'My Todos' : 'Add Todo'}/>
         {
-          showTodos ? null : <TodoForm 
+          showTodos ? <TodoLists /> : <TodoForm 
             setShowTodos={setShowTodos}
             showTodos={showTodos}
-            addTodo={() => addTodo} />
+            addTodo={setTodos} />
         }
         {
           showTodos && <OpenAddToDoButton openForm={ () => setShowTodos(false)}/>
         }
-    </SafeAreaView>
+      </SafeAreaView>
+    </TodosContext.Provider>
   );
 }
 

@@ -1,16 +1,22 @@
 import { Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-native'
 import React, { Component, useState } from 'react'
-
+const uuidv4 = require("uuid/v4")
 const Error = ({msg}) => <Text style={styles.error}>{msg}</Text>
 
-export default function AddTodo({setShowTodos,showTodos,addTodo}) {
+export default function AddTodo({setShowTodos,showTodos,addTodo,todos}) {
     const [title, setTitle] = useState(null)
     const [description, setDescription] = useState(null)
 
     const handleSubmit = () => {
         if(title && description)  {
-            addTodo(title,description)
             setShowTodos(!showTodos)
+            addTodo((prevTodos => {
+                return [...prevTodos, {
+                    id: uuidv4(),
+                    title,
+                    description
+                }]
+            }))
             setTitle(null)
             setDescription(null)
         }
