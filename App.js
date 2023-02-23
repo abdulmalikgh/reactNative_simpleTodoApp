@@ -6,27 +6,29 @@ import Header from './components/Header';
 import OpenAddToDoButton from './components/OpenAddToDoButton';
 import TodoLists from './components/TodoLists';
 
-export const TodosContext = createContext([])
 
 export default function App() {
   const [showTodos, setShowTodos] = useState(true)
   const [todos, setTodos] = useState([])
 
   return (
-    <TodosContext.Provider value={todos}>
       <SafeAreaView style={styles.container}>
         <Header  title={showTodos ? 'My Todos' : 'Add Todo'}/>
         {
-          showTodos ? <TodoLists /> : <TodoForm 
+          showTodos ? 
+          <TodoLists t
+            todos={todos}
+            setTodos={setTodos} /> :
+          <TodoForm 
             setShowTodos={setShowTodos}
             showTodos={showTodos}
-            addTodo={setTodos} />
+            addTodo={setTodos}
+            todos={todos} />
         }
         {
           showTodos && <OpenAddToDoButton openForm={ () => setShowTodos(false)}/>
         }
       </SafeAreaView>
-    </TodosContext.Provider>
   );
 }
 

@@ -1,6 +1,5 @@
 import { Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-native'
 import React, { Component, useState } from 'react'
-const uuidv4 = require("uuid/v4")
 const Error = ({msg}) => <Text style={styles.error}>{msg}</Text>
 
 export default function AddTodo({setShowTodos,showTodos,addTodo,todos}) {
@@ -12,7 +11,7 @@ export default function AddTodo({setShowTodos,showTodos,addTodo,todos}) {
             setShowTodos(!showTodos)
             addTodo((prevTodos => {
                 return [...prevTodos, {
-                    id: uuidv4(),
+                    id: Math.floor(Math.random() * 100),
                     title,
                     description
                 }]
