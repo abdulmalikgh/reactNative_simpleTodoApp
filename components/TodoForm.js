@@ -2,20 +2,31 @@ import { Text, TouchableOpacity, View, StyleSheet, TextInput } from 'react-nativ
 import React, { Component, useState } from 'react'
 const Error = ({msg}) => <Text style={styles.error}>{msg}</Text>
 
-export default function AddTodo({setShowTodos,showTodos,addTodo,todos}) {
-    const [title, setTitle] = useState(null)
-    const [description, setDescription] = useState(null)
-
+export default function AddTodo({setShowTodos,showTodos,addTodo,todo,isEdit,updateTodo}) {
+    const [title, setTitle] = useState(todo?.title || null)
+    const [description, setDescription] = useState(todo?.description || null)
+    const addNewTodo = () => {
+        addTodo((prevTodos => {
+            return [...prevTodos, {
+                id: Math.floor(Math.random() * 100),
+                title,
+                description
+            }]
+        }))
+    }
+    
     const handleSubmit = () => {
         if(title && description)  {
             setShowTodos(!showTodos)
-            addTodo((prevTodos => {
-                return [...prevTodos, {
-                    id: Math.floor(Math.random() * 100),
+            if(isEdit) {
+                updateTodo({
+                    id:todo.id,
                     title,
                     description
-                }]
-            }))
+                })
+            } else {
+                addNewTodo()
+            }
             setTitle(null)
             setDescription(null)
         }
@@ -48,7 +59,7 @@ export default function AddTodo({setShowTodos,showTodos,addTodo,todos}) {
                 <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleSubmit} style={styles.add}>
-                <Text style={styles.buttonText}>Add Todo</Text>
+                <Text style={styles.buttonText}>{isEdit ? 'Edit': 'Add'} Todo</Text>
             </TouchableOpacity>
        </View>
       </View>

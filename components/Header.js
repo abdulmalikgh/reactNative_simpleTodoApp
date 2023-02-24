@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 60,
         backgroundColor:'#000A23',
-        marginTop: StatusBar.currentHeight || 0
+        marginTop: StatusBar.currentHeight || 0,
+       
     },
     headerText: {
         fontSize:18,

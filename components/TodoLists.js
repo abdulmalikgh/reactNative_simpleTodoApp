@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons';
+import TodoForm  from './TodoForm'
 
-export function TodoItem({ todo,deleteTodo }) {
+export function TodoItem({ todo,deleteTodo,editTodo }) {
     const handleDeleteTodo = () => {
       return Alert.alert(
         'Confirm Delete',
@@ -11,7 +12,6 @@ export function TodoItem({ todo,deleteTodo }) {
         [
           {
             text: 'No',
-            onPress: () => console.log('Cancel Pressed'),
             style: 'cancel',
           },
           {
@@ -30,7 +30,7 @@ export function TodoItem({ todo,deleteTodo }) {
             <Text style={styles.todoItemDescription}>{todo.description}</Text>
           </View>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity style={{padding:5}}>
+            <TouchableOpacity onPress={() => editTodo(todo)} style={{padding:5}}>
               <AntDesign name="edit" size={24} color="green" />
             </TouchableOpacity>
             <TouchableOpacity style={{padding:5}}>
@@ -41,11 +41,15 @@ export function TodoItem({ todo,deleteTodo }) {
     )
 }
 
-export default function TodoLists({todos, setTodos}) {
+export default function TodoLists({todos, setTodos,setShowTodos,setEditTodo,setSelectedTodo}) {
   const deleteTodo = (todo) => {
     setTodos(todos.filter((td) => td.id !== todo.id))
   }
-
+  const editTodo = (todo) => {
+    setSelectedTodo(todo)
+    setShowTodos(false)
+    setEditTodo(true)
+  }
   return (
     <View style={styles.container}>
       {
@@ -54,7 +58,10 @@ export default function TodoLists({todos, setTodos}) {
          <FlatList 
           data={todos}
           keyExtractor={item => item.id}
-          renderItem={({item}) => <TodoItem todo={item} deleteTodo={deleteTodo} />}
+          renderItem={({item}) => <TodoItem 
+            todo={item} 
+            deleteTodo={deleteTodo}
+            editTodo={editTodo} />}
         />
       }
     </View>
